@@ -5,18 +5,37 @@ GitAnalysis is a general-purpose git log analysis program to compare the git act
 
 The GitAnalysis program includes the following three parts:
 
-(1) git.sql
+(1) Database
 
-This is the SQL script used to create a MySQL database to store the git logs. The best way to use this script is to create a database "git" in MySQL, and then import this script into the "git" database, which will result in a "log" table in the "git" database.
+The GitAnalysis uses MySQL to store git log information for further analysis. To create the database and table needed for GitAnalysis, you will need to do the following with MySQL:
+
+mysql> CREATE DATABASE git;
+mysql> USE git;
+mysql> CREATE TABLE IF NOT EXISTS `logs` (
+  `main_project` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `sub_project` varchar(20) NOT NULL,
+  `commit` varchar(80) NOT NULL,
+  `author` varchar(250) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  `date` date NOT NULL,
+  `domain` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+mysql> quit;
 
 Each record in the "log" table includes the folloiwng information:
 
   -- main_project, the name of the main project (a main project might include multiple sub-projects)
+  
   -- sub_project, the name of the sub-project
+  
   -- commit, the ID of the commit action
+  
   -- author, the name of the committer
+  
   -- email, the email address of the committer
+  
   -- date, the date of the commit action
+  
   -- domain, which is the domain name of the email address
   
 (2) Git.java
