@@ -21,7 +21,7 @@ mysql> CREATE TABLE IF NOT EXISTS `logs` (
   `date` date NOT NULL,
   `domain` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-mysql> quit;
+mysql> QUIT;
 </pre>
 
 Each record in the "log" table includes the folloiwng information:
