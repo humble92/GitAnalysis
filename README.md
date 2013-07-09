@@ -12,14 +12,14 @@ The GitAnalysis uses MySQL to store git log information for further analysis. To
 <pre>
 mysql> CREATE DATABASE git;
 mysql> USE git;
-mysql> CREATE TABLE IF NOT EXISTS `logs` (
-  `main_project` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `sub_project` varchar(20) NOT NULL,
-  `commit` varchar(80) NOT NULL,
-  `author` varchar(250) NOT NULL,
-  `email` varchar(250) NOT NULL,
-  `date` date NOT NULL,
-  `domain` varchar(250) NOT NULL
+mysql> CREATE TABLE IF NOT EXISTS 'logs' (
+  'main_project' varchar(255) CHARACTER SET utf8 NOT NULL,
+  'sub_project' varchar(20) NOT NULL,
+  'commit' varchar(80) NOT NULL,
+  'author' varchar(250) NOT NULL,
+  'email' varchar(250) NOT NULL,
+  'date' date NOT NULL,
+  'domain' varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 mysql> QUIT;
 </pre>
