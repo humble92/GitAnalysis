@@ -9,6 +9,7 @@ The GitAnalysis program includes the following three parts:
 
 The GitAnalysis uses MySQL to store git log information for further analysis. To create the database and table needed for GitAnalysis, you will need to do the following with MySQL:
 
+<pre>
 mysql> CREATE DATABASE git;
 mysql> USE git;
 mysql> CREATE TABLE IF NOT EXISTS `logs` (
@@ -21,6 +22,7 @@ mysql> CREATE TABLE IF NOT EXISTS `logs` (
   `domain` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 mysql> quit;
+</pre>
 
 Each record in the "log" table includes the folloiwng information:
 
