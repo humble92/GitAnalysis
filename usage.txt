@@ -27,3 +27,22 @@ $ java Git import OpenStack quantum
 $ java Git import OpenStack swift
 $ java Git import OpenStack glance
 
+
+(3) Delete Git Logs
+
+Sometimes we might have dirty data in the database. For example, one might import the same set of log data into the database twice, which results in duplications. So we provide three methods to delete git logs from the database.
+
+To delete ALL records in the database, use the following command:
+
+$ java Git clear ALL
+
+To delete all records related to a main project, use the following command:
+
+$ java Git clear main_project
+
+To delete all records related to a sub project, use the following command:
+
+$ java Git clear main_project sub_project
+
+
+(4)
