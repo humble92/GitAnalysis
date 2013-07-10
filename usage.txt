@@ -1,0 +1,29 @@
+(1) Generate Git Logs
+
+First you will need to clone the related git repositories to your local computer, and then use the "git log" command to generate git logs and save them into a text file (default to log.txt within the project's directory). For example:
+
+$ git clone https://github.com/openstack/quantum.git
+$ cd quantum
+$ git log > log.txt
+
+You might want to include "--no-merges" option to the "git log" command, for example:
+
+$ git log --no-merges > log.txt
+
+
+(2) Import Git Logs
+
+To import git logs into the database, use the following command:
+
+$ java Git import main_project sub_project
+
+The main_project parameter represents the name of the main project, such as OpenStack. A main project might include a number of sub projects. For example, nova, quantum, glance are sub projects of the OpenStack main project. Therefore, for the OpenStack project, you will need to import the git logs using the following commands:
+
+$ java Git import OpenStack nova
+$ java Git import OpenStack cinder
+$ java Git import OpenStack horizon
+$ java Git import OpenStack keystone
+$ java Git import OpenStack quantum
+$ java Git import OpenStack swift
+$ java Git import OpenStack glance
+
