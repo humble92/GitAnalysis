@@ -13,7 +13,7 @@ public class Git
 	 *
 	 */
 	 
-	String db_hostname = "localhost", db_username = "root", db_password = "Rugh00ooLyP", db_database = "git";
+	String db_hostname = "localhost", db_username = "root", db_password = "root", db_database = "git";
 	Connection db_connect;
 
 	 
