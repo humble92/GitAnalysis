@@ -13,15 +13,34 @@ public class Git
 	 *
 	 */
 	 
-	String db_hostname = "localhost", db_username = "root", db_password = "root", db_database = "git";
+	String db_hostname = "localhost", db_username = "root", db_password = "Rugh00ooLyP", db_database = "git";
 	Connection db_connect;
 
-	/*
+	 
+	String[] dates = {"2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", 
+		"2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", 
+		"2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", 
+		"2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", 
+		"2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01",
+		"2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01", "2013-09-01", "2013-10-01", "2013-11-01", "2013-12-01"};
+	 
+	String[] openstack_projects = {"swift", "neutron", "nova", "tripleo-image-elements", "compute-api", "api-site", "keystone", "openstack-manuals", "tempest", "object-api", "cinder", "python-neutronclient", "horizon", "python-keystoneclient", "ceilometer", "python-marconiclient", "heat", "os-refresh-config", "os-apply-config", "os-collect-config", "glance", "trove-integration", "marconi", "requirements", "oslo-incubator", "trove", "python-swiftclient", "diskimage-builder", "django_openstack_auth", "tripleo-incubator", "python-cinderclient", "ironic", "netconn-api", "python-troveclient", "python-openstackclient", "python-novaclient", "python-ironicclient", "python-heatclient", "python-glanceclient", "python-ceilometerclient", "oslo.messaging", "oslo.config", "heat-templates", "oslo.version", "image-api", "tripleo-heat-templates", "governance", "openstack-planet", "oslo.sphinx", "identity-api", "melange", "operations-guide", "heat-cfntools", "volume-api", "database-api", "python-melangeclient", "openstack-chef"};
+	
+	String[] openstack_infra_projects = {"nodepool", "config", "elastic-recheck", "jenkins-job-builder", "reviewstats", "tripleo-ci", "jeepyb", "devstack-gate", "pypi-mirror", "gerritlib", "zuul", "activity-board", "gitdm", "publications", "groups", "gear", "gearman-plugin", "storyboard", "reviewday", "gerrit", "git-review", "odsreg", "gerritbot", "puppet-dashboard", "askbot-theme", "statusbot", "zmq-event-publisher", "nose-html-output", "meetbot", "releasestatus", "puppet-vcsrepo", "puppet-apparmor", "lodgeit"};
+	
+	String[] opennebula_projects = {"one"};
+	
+	String[] eucalyptus_projects = {"eucalyptus"};
+	
+	String[] cloudstack_projects = {"cloudstack"};
+	
+
+	/**
 	 *
 	 * Create DB Connection
 	 *
 	 */
-	 
+	
 	public void open_db_connection()
 	{
 		if (db_connect == null)
@@ -210,25 +229,25 @@ public class Git
 	}
 
 
-	public void count_contribution(String project, String start, String end)
+	public void count_contribution(String main_project, String sub_project, String start, String end)
 	{
 		String sql = null, sql_total=null;
 		int count_total=1, count, percentage;
 		String domain;
 		
-		if (project.equals("openstack"))
+		if (main_project.equals(sub_project))
 		{
-			sql_total =  "SELECT count(*) AS count FROM logs WHERE (project = 'cinder' || project = 'glance' || project = 'horizon' || project = 'keystone' || project = 'nova' || project = 'quantum' || project = 'swift') AND date >= '" + start + "' AND date < '" + end + "'";	
-					
-			sql = "SELECT count(*) AS count, domain FROM logs WHERE (project = 'cinder' || project = 'glance' || project = 'horizon' || project = 'keystone' || project = 'nova' || project = 'quantum' || project = 'swift') AND date >= '" + start + "' AND date < '" + end + "' GROUP BY domain ORDER BY count DESC LIMIT 10";			
+			sql_total =  "SELECT count(*) AS count FROM logs WHERE main_project = '" + main_project + "' AND date >= '" + start + "' AND date < '" + end + "'";	
+						
+			sql = "SELECT count(*) AS count, domain FROM logs WHERE main_project = '" + main_project + "' AND date >= '" + start + "' AND date < '" + end + "' GROUP BY domain ORDER BY count DESC LIMIT 10";	
 		}
 		else
 		{
-
-			sql_total =  "SELECT count(*) AS count FROM logs WHERE project = '" + project + "' AND date >= '" + start + "' AND date < '" + end + "'";	
-					
-			sql = "SELECT count(*) AS count, domain FROM logs WHERE project = '" + project + "' AND date >= '" + start + "' AND date < '" + end + "' GROUP BY domain ORDER BY count DESC LIMIT 10";	
+			sql_total =  "SELECT count(*) AS count FROM logs WHERE sub_project = '" + sub_project + "' AND date >= '" + start + "' AND date < '" + end + "'";	
+						
+			sql = "SELECT count(*) AS count, domain FROM logs WHERE sub_project = '" + sub_project + "' AND date >= '" + start + "' AND date < '" + end + "' GROUP BY domain ORDER BY count DESC LIMIT 10";				
 		}
+
 		// Check DB Connection 
 		if (db_connect == null) 
 		{
@@ -282,11 +301,9 @@ public class Git
     	    String inputLine;
     	    while ((inputLine = in.readLine()) != null) 
 			{
-//				System.out.println(inputLine);
 				if (inputLine.indexOf("commit")==0)
 				{
 					commit = inputLine.substring(7).trim();
-					System.out.println(commit);
 					
 					// Get Author line
 					inputLine = in.readLine();
@@ -299,9 +316,6 @@ public class Git
 					author = inputLine.substring(7, pos_1).trim();
 					email = inputLine.substring(pos_1+1, pos_2).trim();
 					domain = email.substring(email.indexOf('@')+1);
-					System.out.println(author);
-					System.out.println(email);
-					System.out.println(domain);
 					
 					// Get Date line
 					inputLine = in.readLine();
@@ -363,9 +377,6 @@ public class Git
 					{
 						date = year + "-12-" + day;
 					}
-					System.out.println(date);
-					
-					System.out.println("");
 					
 					insert_data(main_project, project, commit, author, email, domain, date);
 				}
@@ -377,149 +388,280 @@ public class Git
 			
 	}
 	
-	public void fetch_log()
-	{
-		clean_up_table();
-		import_log("OpenNebula", "one");
-		import_log("Eucalyptus", "eucalyptus");
-//		import_log("cloudstack");
-//		import_log("cinder");
-//		import_log("glance");
-//		import_log("horizon");
-//		import_log("keystone");
-//		import_log("nova");
-//		import_log("quantum");
-//		import_log("swift");
-	}
 	
 	public void count(String type)
 	{
-		String[] dates = {"2008-03-01", "2008-04-01", "2008-05-01", "2008-06-01", "2008-07-01", "2008-08-01", "2008-09-01", "2008-10-01", "2008-11-01", "2008-12-01", 
-		"2009-01-01", "2009-02-01", "2009-03-01", "2009-04-01", "2009-05-01", "2009-06-01", "2009-07-01", "2009-08-01", "2009-09-01", "2009-10-01", "2009-11-01", "2009-12-01", 
-		"2010-01-01", "2010-02-01", "2010-03-01", "2010-04-01", "2010-05-01", "2010-06-01", "2010-07-01", "2010-08-01", "2010-09-01", "2010-10-01", "2010-11-01", "2010-12-01", 
-		"2011-01-01", "2011-02-01", "2011-03-01", "2011-04-01", "2011-05-01", "2011-06-01", "2011-07-01", "2011-08-01", "2011-09-01", "2011-10-01", "2011-11-01", "2011-12-01", 
-		"2012-01-01", "2012-02-01", "2012-03-01", "2012-04-01", "2012-05-01", "2012-06-01", "2012-07-01", "2012-08-01", "2012-09-01", "2012-10-01", "2012-11-01", "2012-12-01",
-		"2013-01-01", "2013-02-01", "2013-03-01", "2013-04-01", "2013-05-01", "2013-06-01", "2013-07-01", "2013-08-01"};
 		
 		int cs=0, eu=0, on=0, os=0;
-		int cinder, glance, horizon, keystone, nova, quantum, swift;
-		/*
+		
+		if (type.equals("population"))
+		{
 			for (int i=dates.length - 1; i>=1; i--)
 			{
-				cs = count_activity(type, "cloudstack", dates[i-1], dates[i]);
-				eu = count_activity(type, "eucalyptus", dates[i-1], dates[i]);
-				on = count_activity(type, "one", dates[i-1], dates[i]);
-				cinder = count_activity(type, "cinder", dates[i-1], dates[i]);
-				glance = count_activity(type, "glance", dates[i-1], dates[i]);
-				horizon = count_activity(type, "horizon", dates[i-1], dates[i]);
-				keystone = count_activity(type, "keystone", dates[i-1], dates[i]);
-				nova = count_activity(type, "nova", dates[i-1], dates[i]);
-				quantum = count_activity(type, "quantum", dates[i-1], dates[i]);
-				swift = count_activity(type, "swift", dates[i-1], dates[i]);
-				os = count_activity(type, "openstack", dates[i-1], dates[i]);
-	
-				System.out.println(dates[i] + " " + os + " " + on + " " + eu + " " + cs + " " + cinder + " " + glance + " " + horizon + " " + keystone + " " + nova + " " + quantum + " " + swift);
+				cs = count_activity("authors", "CloudStack", "CloudStack", "2009-01-01", dates[i]);
+				eu = count_activity("authors", "Eucalyptus", "Eucalyptus", "2009-01-01", dates[i]);
+				on = count_activity("authors", "OpenNebula", "OpenNebula", "2009-01-01", dates[i]);
+				os = count_activity("authors", "OpenStack",  "OpenStack",  "2009-01-01", dates[i]);
+				System.out.println(dates[i] + "   " + os + "   " + on + "   " + eu + "   " + cs);
+			}				
+		}
+		else
+		{
+			for (int i=dates.length - 1; i>=1; i--)
+			{
+				cs = count_activity(type, "CloudStack", "CloudStack", dates[i-1], dates[i]);
+				eu = count_activity(type, "Eucalyptus", "Eucalyptus", dates[i-1], dates[i]);
+				on = count_activity(type, "OpenNebula", "OpenNebula", dates[i-1], dates[i]);
+				os = count_activity(type, "OpenStack",  "OpenStack",  dates[i-1], dates[i]);
+				System.out.println(dates[i] + "   " + os + "   " + on + "   " + eu + "   " + cs);				
+			}	
+		}
+	}	
+
+	public void count_openstack(String type)
+	{
+		
+		int cinder=0, glance=0, horizon=0, keystone=0, nova=0, neutron=0, swift=0;
+
+			for (int i=dates.length - 1; i>=1; i--)
+			{
+				cinder 		= count_activity(type, "OpenStack", "cinder", dates[i-1], dates[i]);
+				glance 		= count_activity(type, "OpenStack", "glance", dates[i-1], dates[i]);
+				horizon 	= count_activity(type, "OpenStack", "horizon", dates[i-1], dates[i]);
+				keystone 	= count_activity(type, "OpenStack", "keystone",  dates[i-1], dates[i]);
+				nova 		= count_activity(type, "OpenStack", "nova", dates[i-1], dates[i]);
+				neutron 	= count_activity(type, "OpenStack", "neutron", dates[i-1], dates[i]);
+				swift 		= count_activity(type, "OpenStack", "swift",  dates[i-1], dates[i]);
+				System.out.println(dates[i] + "   " + cinder + "   " + glance + "   " + horizon + "   " + keystone + "   " + nova + "   " + neutron + "   " + swift);
 				
 			}	
-		*/	
 	}	
 	
-	public void print_usage_information()
+	
+	public void fetch_git_raw_data()
 	{
-			System.out.println("	");
-			System.out.println("    Usage: java Git action main_project sub_project [start_date] [end_date]\n");
-			System.out.println("	");
-			System.out.println("    action        -- clear, import, commits, authors, domains.");
-			System.out.println("                     clear       - clear out the database, delete everything.");
-			System.out.println("                     import      - import git records.");
-			System.out.println("    main_project  -- Name of the main project, such as CloudStack, Eucalyptus, OpenNebula, OpenStack.");
-			System.out.println("    sub_project   -- Name of the sub project, such as nova or cinder. Default to main_project if ommitted.");
-			System.out.println("                     This is also the directory name of the sub project.");
-			System.out.println("	");
-			System.out.println("    Example: java Git import OpenStack nova\n");
+	
+		String del_command=null, git_command=null, log_command=null, line=null;
+		PrintStream original = System.out;
+		
+		try
+		{
+			// Clean Up Table
+			System.out.println("Cleaning up database...");
+			clean_up_table();
+
+			// OpenStack Main Projects
+			Runtime rt = Runtime.getRuntime();
+			Process proc;
+			BufferedReader in;
+			
+			
+			for (int i=0; i<openstack_projects.length; i++)
+			{
+				del_command = "rm -Rf " + openstack_projects[i];
+				System.out.println("Executing: " + del_command);
+				proc = rt.exec(del_command);
+				proc.waitFor();
+	
+				git_command = "git clone https://github.com/openstack/" + openstack_projects[i];
+				System.out.println("Executing: " + git_command);
+				proc = rt.exec(git_command);
+				proc.waitFor();
+				
+				log_command = "git --git-dir=" + openstack_projects[i] + "/.git log --no-merges";
+				System.out.println("Executing: " + log_command);
+				System.setOut(new PrintStream(new FileOutputStream(openstack_projects[i] + "/log.txt")));
+				proc = rt.exec(log_command);
+				in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				while ((line = in.readLine()) != null) 
+				{
+					System.out.println(line);
+				}
+				in.close();
+				System.setOut(original);
+				
+				System.out.println("Importing log into database for project " + openstack_projects[i]);
+				import_log("OpenStack", openstack_projects[i]);
+			}
+	
+			// OpenStack Infrastructure Projects
+			for (int i=0; i<openstack_infra_projects.length; i++)
+			{
+				del_command = "rm -Rf " + openstack_infra_projects[i];
+				System.out.println("Executing: " + del_command);
+				proc = rt.exec(del_command);
+				proc.waitFor();
+	
+				git_command = "git clone https://github.com/openstack-infra/" + openstack_infra_projects[i];
+				System.out.println("Executing: " + git_command);
+				proc = rt.exec(git_command);
+				proc.waitFor();
+				
+				log_command = "git --git-dir=" + openstack_infra_projects[i] + "/.git log --no-merges";
+				System.out.println("Executing: " + log_command);
+				System.setOut(new PrintStream(new FileOutputStream(openstack_infra_projects[i] + "/log.txt")));
+				proc = rt.exec(log_command);
+				in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				while ((line = in.readLine()) != null) 
+				{
+					System.out.println(line);
+				}
+				in.close();
+				System.setOut(original);
+				
+				System.out.println("Importing log into database for project " + openstack_infra_projects[i]);
+				import_log("OpenStack", openstack_infra_projects[i]);
+			}
+					
+			// Eucalyptus Projects
+			for (int i=0; i<eucalyptus_projects.length; i++)
+			{
+				del_command = "rm -Rf " + eucalyptus_projects[i];
+				System.out.println("Executing: " + del_command);
+				proc = rt.exec(del_command);
+				proc.waitFor();
+	
+				git_command = "git clone https://github.com/eucalyptus/" + eucalyptus_projects[i];
+				System.out.println("Executing: " + git_command);
+				proc = rt.exec(git_command);
+				proc.waitFor();
+				
+				log_command = "git --git-dir=" + eucalyptus_projects[i] + "/.git log --no-merges";
+				System.out.println("Executing: " + log_command);
+				System.setOut(new PrintStream(new FileOutputStream(eucalyptus_projects[i] + "/log.txt")));
+				proc = rt.exec(log_command);
+				in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				while ((line = in.readLine()) != null) 
+				{
+					System.out.println(line);
+				}
+				in.close();
+				System.setOut(original);
+				
+				System.out.println("Importing log into database for project " + eucalyptus_projects[i]);
+				import_log("Eucalyptus", eucalyptus_projects[i]);
+			}
+			
+
+			// CloudStack Projects
+			for (int i=0; i<cloudstack_projects.length; i++)
+			{
+				del_command = "rm -Rf " + cloudstack_projects[i];
+				System.out.println("Executing: " + del_command);
+				proc = rt.exec(del_command);
+				proc.waitFor();
+	
+				git_command = "git clone https://git-wip-us.apache.org/repos/asf/" + cloudstack_projects[i];
+				System.out.println("Executing: " + git_command);
+				proc = rt.exec(git_command);
+				proc.waitFor();
+				
+				log_command = "git --git-dir=" + cloudstack_projects[i] + "/.git log --no-merges";
+				System.out.println("Executing: " + log_command);
+				System.setOut(new PrintStream(new FileOutputStream(cloudstack_projects[i] + "/log.txt")));
+				proc = rt.exec(log_command);
+				in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				while ((line = in.readLine()) != null) 
+				{
+					System.out.println(line);
+				}
+				in.close();
+				System.setOut(original);
+				
+				System.out.println("Importing log into database for project " + cloudstack_projects[i]);
+				import_log("CloudStack", cloudstack_projects[i]);
+			}
+			
+			// OpenNebula Projects
+			for (int i=0; i<opennebula_projects.length; i++)
+			{
+				del_command = "rm -Rf " + opennebula_projects[i];
+				System.out.println("Executing: " + del_command);
+				proc = rt.exec(del_command);
+				proc.waitFor();
+	
+				git_command = "git clone git://git.opennebula.org/" + opennebula_projects[i];
+				System.out.println("Executing: " + git_command);
+				proc = rt.exec(git_command);
+				proc.waitFor();
+				
+				log_command = "git --git-dir=" + opennebula_projects[i] + "/.git log --no-merges";
+				System.out.println("Executing: " + log_command);
+				System.setOut(new PrintStream(new FileOutputStream(opennebula_projects[i] + "/log.txt")));
+				proc = rt.exec(log_command);
+				in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				while ((line = in.readLine()) != null) 
+				{
+					System.out.println(line);
+				}
+				in.close();
+				System.setOut(original);
+				
+				System.out.println("Importing log into database for project " + opennebula_projects[i]);
+				import_log("OpenNebula", opennebula_projects[i]);
+			}
+						
+		} catch (Exception e)
+		{
+		}
+		
+	
 	}
+	
 	
 	public static void main(String args[])
 	{
 		Git git = new Git();
-/*
-		git.fetch_log();
+
+/*		
+		// Fetch git data and save to database
+		git.fetch_git_raw_data();
+
+		// Main project analysis
 		System.out.println("\n\nCommit_Analysis \n\n");
 		git.count("commits");
 		System.out.println("\n\nAuthor_Analysis \n\n");
 		git.count("authors");
 		System.out.println("\n\nDomain_Analysis \n\n");
 		git.count("domains");
+		System.out.println("\n\nPopulation_Analysis \n\n");
+		git.count("population");
+
+
+		// OpenStack sub-project analysis
+		System.out.println("\n\nOpenStack Commit_Analysis \n\n");
+		git.count_openstack("commits");
+		System.out.println("\n\nOpenStack Author_Analysis \n\n");
+		git.count_openstack("authors");
+		System.out.println("\n\nOpenStack Domain_Analysis \n\n");
+		git.count_openstack("domains");
+
+
+		System.out.println("\n\nCloudStack Top Contributors \n\n");
+		git.count_contribution("CloudStack", "CloudStack", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nEucalyptus Top Contributors \n\n");
+		git.count_contribution("Eucalyptus", "Eucalyptus", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nOpenNebula Top Contributors \n\n");
+		git.count_contribution("OpenNebula", "OpenNebula", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nOpenStack Top Contributors \n\n");
+		git.count_contribution("OpenStack", "OpenStack", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nCinder Top Contributors \n\n");
+		git.count_contribution("OpenStack", "cinder", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nGlance Top Contributors \n\n");
+		git.count_contribution("OpenStack", "glance", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nHorizon Top Contributors \n\n");
+		git.count_contribution("OpenStack", "horizon", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nKeystone Top Contributors \n\n");
+		git.count_contribution("OpenStack", "keystone", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nNova Top Contributors \n\n");
+		git.count_contribution("OpenStack", "nova", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nNeutron Top Contributors \n\n");
+		git.count_contribution("OpenStack", "neutron", "2013-7-01", "2013-10-01");
+		System.out.println("\n\nSwift Top Contributors \n\n");
+		git.count_contribution("OpenStack", "swift", "2013-7-01", "2013-10-01");
 */
-//		git.count_contribution("swift", "2013-04-01", "2013-07-01");
-		int length = args.length;
-		String action, main_project, sub_project, start_date, end_date;
-		
-		if (length < 2)
-		{
-			git.print_usage_information();
-		}
-		else
-		{
-			action = args[0];
-			main_project = args[1];
-			if (length == 3)	
-			{
-				sub_project = args[2];
-			}
-			else
-			{
-				sub_project = main_project;
-			}
-			
-			if (action.equals("clear"))
-			{
-				if (main_project.equals("ALL"))
-				{
-					git.clean_up_table();
-				}	
-				else
-				{
-					git.clean_up_record(main_project, sub_project);
-				}
-			} 
-			else if (action.equals("import"))
-			{
-				git.import_log(main_project, sub_project);
-			}
-			else if ((action.equals("commits")) || (action.equals("authors")) || (action.equals("domains")))
-			{
-				int count;
-				if (length == 3)
-				{
-					start_date = "1000-01-01";	// A very very early date
-					end_date	= "NOW()";
-					count = git.count_activity(action, main_project, sub_project, start_date, end_date);
-					System.out.println("Count: " + count);					
-				}
-				else if (length == 4)
-				{
-					start_date = args[3];
-					end_date	= "NOW()";
-					count = git.count_activity(action, main_project, sub_project, start_date, end_date);
-					System.out.println("Count: " + count);					
-				}	
-				else if (length == 5)
-				{
-					start_date = args[3];
-					end_date	= args[4];
-					count = git.count_activity(action, main_project, sub_project, start_date, end_date);
-					System.out.println("Count: " + count);					
-				}
-				else
-				{
-					git.print_usage_information();
-				}
-			}
-			else
-			{
-				git.print_usage_information();
-			}
-		}
+		System.out.println("\n\nPopulation_Analysis \n\n");
+		git.count("population");
+
 	}
 }
