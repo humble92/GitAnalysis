@@ -1,7 +1,7 @@
 GitAnalysis
 ===========
 
-GitAnalysis is a general-purpose git log analysis program to compare the git activity between multiple projects with sub projects. Initially this program was written as part of the effort to compare the activeness of various open source IaaS projects, including CloudStack, Eucalyptus, OpenNebula, and OpenStack. However, it can be used to carry out git log analysis for any other git projects.
+GitAnalysis is a general-purpose git log analysis program to compare the git activity between multiple projects with sub projects. Initially this program was written as part of the effort to compare the activeness of various open source IaaS projects, including CloudStack, Eucalyptus, OpenNebula, and OpenStack. However, it can be used to carry out git log analysis for any other git projects. (Only very little modification is needed. Read the code for details.)
 
 The GitAnalysis program includes the following three parts:
 
