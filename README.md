@@ -47,10 +47,6 @@ This is a Java program that performs the following tasks:
   -- import git logs into the MySQL database from a log file (text format)
   -- carry out statistics within the MySQL database for the number of commits, authors, domains in a certain period
   
-For a detailed instruction on how to use this program, please refer to usage.txt.
-
-(3) run.sh
-
-This is the script being used to carry of git log analysis for the various open source IaaS projects. It can be used as a piece of sample script, which can be modified and used for ohter git analysis projects.
+For a detailed instruction on how to use this program, please refer to the code.
 
 
